@@ -4220,6 +4220,10 @@ static void xtest_pkcs11_test_1017(ADBG_Case_t *c)
 	if (!ADBG_EXPECT_CK_OK(c, rv))
 		goto out;
 
+	rv = C_EncryptInit(session, &cktest_aes_cbc_mechanism, aes_key_enc);
+	if (!ADBG_EXPECT_CK_RESULT(c, CKR_OPERATION_ACTIVE, rv))
+		goto out;
+
 	data_len = 32;
 	key_len = 32;
 	rv = derive_sym_key(session, aes_key2, CKM_AES_ECB_ENCRYPT_DATA,
